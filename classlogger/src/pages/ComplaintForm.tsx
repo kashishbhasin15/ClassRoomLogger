@@ -42,9 +42,9 @@ export const ComplaintForm = () => {
     try {
       await API.post("/complaints", {
         roomNumber: formData.roomNumber,
-        buildingName: formData.building,       // ✅ mapping fix
+        buildingName: formData.building,       
         complaintType: formData.complaintType,
-        urgencyLevel: formData.urgency,        // ✅ mapping fix
+        urgencyLevel: formData.urgency,        
         date: formData.date,
         timeSlot: formData.timeSlot,
         description: formData.description,

@@ -1,4 +1,4 @@
-.home-container {
+ .home-container {
   width: 100%;
   min-height: 100vh;
   background: var(--bg-secondary);
@@ -42,20 +42,6 @@
   color: var(--text-primary);
 }
 
-.theme-btn {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 10px 12px;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
-}
-
-.theme-btn:hover {
-  background: var(--bg-secondary);
-  color: #3b82f6;
-}
 
 .hero-section {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -513,4 +499,4 @@
   .highlight-number {
     font-size: 28px;
   }
-}
+} 
