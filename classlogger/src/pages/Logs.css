@@ -1,0 +1,140 @@
+.logs-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.logs-main {
+  flex: 1;
+  margin-left: 260px;
+  transition: margin-left 0.3s ease;
+}
+
+.logs-content {
+  padding: 24px;
+  max-width: 1400px;
+}
+
+.logs-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.logs-table thead {
+  background: #f9fafb;
+}
+
+.logs-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.logs-table td {
+  padding: 16px;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logs-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.logs-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-resolved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+@media (max-width: 768px) {
+  .logs-main {
+    margin-left: 0;
+  }
+
+  .logs-content {
+    padding: 16px;
+  }
+
+  .logs-card {
+    padding: 16px;
+  }
+
+  .logs-table th,
+  .logs-table td {
+    padding: 12px 8px;
+    font-size: 14px;
+  }
+
+  .logs-table th:first-child,
+  .logs-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: #ffffff;
+    z-index: 1;
+  }
+
+  .logs-table thead th:first-child {
+    background: #f9fafb;
+  }
+}
+
+
+
+
+
+
+
+
+
+/* Ensure these exist in your Logs.css or add them */
+.status-badge.status-resolved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Optional: specific red for rejected if you want it different from pending */
+.status-badge.status-rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
