@@ -69,6 +69,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
+import { useAuth } from "../context/AuthContext";
 import './AdminLogin.css';
 import API from "../api/api";
 
@@ -76,7 +77,7 @@ export const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+const { setUser } = useAuth();
   // const handleSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
 
@@ -97,9 +98,7 @@ export const AdminLogin = () => {
   //     console.error(err);
   //   }
   // };
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   try {
@@ -108,26 +107,58 @@ export const AdminLogin = () => {
       password,
     });
 
-    // ✅ STORE EVERYTHING (IMPORTANT)
+    // ✅ Create admin user
+    const adminUser = {
+      name: "Admin",
+      email: email,
+      role: "admin" as "admin", // 🔥 FIX TYPE
+    };
+
+    // ✅ Store data
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("role", "admin");
+    localStorage.setItem("user", JSON.stringify(adminUser));
 
-    // 🔥 ADD THIS (missing in your code)
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        name: "Admin",
-        email: email,
-        role: "admin",
-      })
-    );
+    // 🔥 UPDATE CONTEXT (MOST IMPORTANT)
+    setUser(adminUser);
 
+    // ✅ Navigate
     navigate("/admin-dashboard");
 
   } catch (err: any) {
     alert(err.response?.data?.msg || "Admin login failed");
   }
 };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//   e.preventDefault();
+
+//   try {
+//     const res = await API.post("/auth/admin-login", {
+//       email,
+//       password,
+//     });
+
+//     // ✅ STORE EVERYTHING (IMPORTANT)
+//     localStorage.setItem("token", res.data.token);
+//     localStorage.setItem("role", "admin");
+
+//     // 🔥 ADD THIS (missing in your code)
+//     localStorage.setItem(
+//       "user",
+//       JSON.stringify({
+//         name: "Admin",
+//         email: email,
+//         role: "admin",
+//       })
+//     );
+
+//     navigate("/admin-dashboard");
+
+//   } catch (err: any) {
+//     alert(err.response?.data?.msg || "Admin login failed");
+//   }
+// };
 
   return (
     <div className="admin-login-container">

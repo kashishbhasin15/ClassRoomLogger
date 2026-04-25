@@ -7,12 +7,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import { BookOpen } from 'lucide-react';
 import './Login.css';
 import API from "../api/api";
-
+import { useAuth } from "../context/AuthContext";
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
+   const { setUser } = useAuth(); // ✅ ADD THIS
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +38,8 @@ export const Login = () => {
       localStorage.setItem("role", res.data.role || res.data.user?.role);
       // localStorage.setItem("role", res.data.user.role);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+      // 🔥 THIS LINE FIXES NAVBAR
+      setUser(res.data.user);
       // ✅ Redirect
       navigate("/dashboard", { replace: true });
 
