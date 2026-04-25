@@ -17,9 +17,11 @@ const app = express();
 // app.use(cors());
 
 app.use(cors({
-  origin: "*",
+  origin: "https://class-room-logger.vercel.app/",
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
+app.options('*', cors());
 
 app.use(express.json());
 
