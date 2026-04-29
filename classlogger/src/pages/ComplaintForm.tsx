@@ -327,7 +327,7 @@ export const ComplaintForm = () => {
   const [showQR, setShowQR] = useState(false);
   const [showRoomAvailability, setShowRoomAvailability] = useState(false);
 
-  // ✅ NEW STATES (no CSS change needed)
+  // ✅ NEW STATES
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -340,11 +340,11 @@ export const ComplaintForm = () => {
     });
   };
 
-  // ✅ IMPROVED SUBMIT FUNCTION
+  // ✅ FIXED SUBMIT FUNCTION
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (loading) return; // prevent multiple clicks
+    if (loading) return;
     setLoading(true);
 
     try {
@@ -359,7 +359,7 @@ export const ComplaintForm = () => {
       });
 
       // ✅ SUCCESS MESSAGE
-      setMessage("Complaint submitted successfully ✅");
+      setMessage("Complaint submitted successfully");
 
       // ✅ RESET FORM
       setFormData({
@@ -377,7 +377,7 @@ export const ComplaintForm = () => {
 
     } catch (err) {
       console.error(err);
-      setMessage("Error submitting complaint ❌");
+      setMessage("Error submitting complaint");
     } finally {
       setLoading(false);
     }
@@ -423,9 +423,22 @@ export const ComplaintForm = () => {
         <div className="complaint-content">
           <h2 className="page-title">Submit New Complaint</h2>
 
-          {/* ✅ MESSAGE DISPLAY (no CSS change required) */}
+          {/* ✅ MESSAGE DISPLAY (GREEN / RED) */}
           {message && (
-            <div style={{ marginBottom: "10px", fontWeight: "500" }}>
+            <div
+              style={{
+                marginBottom: "10px",
+                fontWeight: "600",
+                padding: "8px",
+                borderRadius: "5px",
+                backgroundColor: message.includes("successfully")
+                  ? "#e6ffe6"
+                  : "#ffe6e6",
+                color: message.includes("successfully")
+                  ? "green"
+                  : "red"
+              }}
+            >
               {message}
             </div>
           )}
