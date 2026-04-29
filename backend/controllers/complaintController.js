@@ -1,45 +1,8 @@
-// import Complaint from "../models/Complaint.js";
-// import User from "../models/Users.js";
-// import sendEmail from "../utils/sendEmail.js";
-
-// // CREATE
-// export const createComplaint = async (req, res) => {
-//   try {
-//     const complaint = await Complaint.create({
-//       ...req.body,
-//       createdBy: req.user.id,
-//     });
-
-//     // send email
-//     const user = await User.findById(req.user.id);
-//     await sendEmail(user.email, "Complaint Submitted", "Your complaint is received.");
-
-//     res.json(complaint);
-//   } catch (err) {
-//     res.status(500).json({ err: err.message });
-//   }
-// };
-
-
-// // GET USER COMPLAINTS
-// export const getMyComplaints = async (req, res) => {
-//   try {
-//     const complaints = await Complaint.find({
-//       createdBy: req.user.id,
-//     }).sort({ createdAt: -1 }); // 🔥 newest first
-
-//     res.json(complaints);
-//   } catch (err) {
-//     res.status(500).json({ msg: err.message });
-//   }
-// };
-
-
-
-
 import Complaint from "../models/Complaint.js";
+import User from "../models/Users.js";
+import sendEmail from "../utils/sendEmail.js";
 
-// ✅ CREATE COMPLAINT (FIXED + FAST)
+// CREATE
 export const createComplaint = async (req, res) => {
   try {
     const complaint = await Complaint.create({
@@ -47,35 +10,26 @@ export const createComplaint = async (req, res) => {
       createdBy: req.user.id,
     });
 
-    // ✅ IMPORTANT: send response immediately
-    return res.status(201).json({
-      message: "Complaint submitted successfully",
-      data: complaint,
-    });
+    // send email
+    const user = await User.findById(req.user.id);
+    await sendEmail(user.email, "Complaint Submitted", "Your complaint is received.");
 
+    res.json(complaint);
   } catch (err) {
-    console.error("Create Complaint Error:", err);
-    return res.status(500).json({
-      message: "Error submitting complaint",
-      error: err.message,
-    });
+    res.status(500).json({ err: err.message });
   }
 };
 
-// ✅ GET USER COMPLAINTS
+
+// GET USER COMPLAINTS
 export const getMyComplaints = async (req, res) => {
   try {
     const complaints = await Complaint.find({
       createdBy: req.user.id,
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: -1 }); // 🔥 newest first
 
-    return res.status(200).json(complaints);
-
+    res.json(complaints);
   } catch (err) {
-    console.error("Fetch Complaint Error:", err);
-    return res.status(500).json({
-      message: "Error fetching complaints",
-      error: err.message,
-    });
+    res.status(500).json({ msg: err.message });
   }
 };
