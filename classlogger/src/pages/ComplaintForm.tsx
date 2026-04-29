@@ -677,7 +677,7 @@ export const ComplaintForm = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  /* ================= INPUT CHANGE ================= */
+  /* ================= INPUT ================= */
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -691,13 +691,13 @@ export const ComplaintForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (loading) return; // 🔥 prevent multiple clicks
+    if (loading) return; // 🔥 prevent double click
+
+    setLoading(true);
+    setMessage("");
+    setError("");
 
     try {
-      setLoading(true);
-      setMessage("");
-      setError("");
-
       const res = await API.post("/complaints", {
         roomNumber: formData.roomNumber,
         buildingName: formData.building,
@@ -708,10 +708,10 @@ export const ComplaintForm = () => {
         description: formData.description,
       });
 
-      // ✅ SUCCESS
+      // ✅ success
       setMessage(res.data?.msg || "Complaint submitted successfully ✅");
 
-      // ✅ RESET FORM
+      // ✅ reset form
       setFormData({
         roomNumber: '',
         building: '',
@@ -722,17 +722,14 @@ export const ComplaintForm = () => {
         urgency: ''
       });
 
-      // ✅ SCROLL TOP
       window.scrollTo({ top: 0, behavior: "smooth" });
 
     } catch (err: any) {
       setError(err.response?.data?.msg || "Error submitting complaint ❌");
-    } finally {
-      // 🔥 FIX STUCK BUTTON ISSUE
-      setTimeout(() => {
-        setLoading(false);
-      }, 200);
     }
+
+    // 🔥 ALWAYS RESET (outside try/catch)
+    setLoading(false);
   };
 
   /* ================= QR ================= */
@@ -745,7 +742,7 @@ export const ComplaintForm = () => {
     setShowQR(false);
   };
 
-  /* ================= ROOM SELECT ================= */
+  /* ================= ROOM ================= */
   const handleRoomSelect = (room: Room) => {
     setFormData({
       ...formData,
@@ -800,9 +797,17 @@ export const ComplaintForm = () => {
             </div>
           ) : (
             <div className="form-card">
-              <form onSubmit={handleSubmit} className="complaint-form">
 
-                {/* ✅ MESSAGES */}
+              <form
+                onSubmit={handleSubmit}
+                className="complaint-form"
+                style={{
+                  pointerEvents: loading ? "none" : "auto",
+                  opacity: loading ? 0.7 : 1
+                }}
+              >
+
+                {/* MESSAGES */}
                 {message && <p className="success-msg">{message}</p>}
                 {error && <p className="error-msg">{error}</p>}
 
@@ -854,7 +859,7 @@ export const ComplaintForm = () => {
                   </div>
                 </div>
 
-                {/* TYPE + URGENCY */}
+                {/* TYPE */}
                 <div className="form-row">
                   <div className="form-field">
                     <label>Complaint Type</label>
@@ -880,7 +885,7 @@ export const ComplaintForm = () => {
                   </div>
                 </div>
 
-                {/* DATE + TIME */}
+                {/* DATE */}
                 <div className="form-row">
                   <div className="form-field">
                     <label>Date</label>
