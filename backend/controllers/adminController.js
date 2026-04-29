@@ -3,7 +3,10 @@ import User from "../models/Users.js";
 
 // ALL complaints
 export const getAllComplaints = async (req, res) => {
-  const complaints = await Complaint.find().populate("createdBy", "name email");
+  // const complaints = await Complaint.find().populate("createdBy", "name email");
+  const complaints = await Complaint.find()
+  .populate("createdBy", "name email")
+  .sort({ createdAt: -1 }); //newest first
   res.json(complaints);
 };
 

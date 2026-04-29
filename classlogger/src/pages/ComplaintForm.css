@@ -211,3 +211,30 @@
     justify-content: center;
   }
 }
+
+
+
+
+
+
+
+
+
+
+.success-msg {
+  color: #16a34a;   /* green */
+  background: #dcfce7;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.error-msg {
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}

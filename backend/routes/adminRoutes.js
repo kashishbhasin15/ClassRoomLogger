@@ -10,7 +10,7 @@ import { protect, authorize } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/complaints", protect, authorize("admin"), getAllComplaints);
+// router.get("/complaints", protect, authorize("admin"), getAllComplaints);
 router.put("/complaints/:id", protect, authorize("admin"), updateStatus);
 router.delete("/complaints/:id", protect, authorize("admin"), deleteComplaint);
 router.get("/users", protect, authorize("admin"), getUsers);
